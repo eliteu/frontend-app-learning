@@ -66,7 +66,14 @@ const Course = ({
       setSessionStorage(`notificationTrayStatus.${courseId}`, 'closed');
     }
   }
-
+  useEffect(() => {
+    window.addEventListener("message", function (event) {
+      console.log('event', event)
+      if (event.data === 'scrollToTop') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }, [])
   useEffect(() => {
     const celebrateFirstSection = celebrations && celebrations.firstSection;
     setFirstSectionCelebrationOpen(shouldCelebrateOnSectionLoad(
