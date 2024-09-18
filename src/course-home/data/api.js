@@ -117,6 +117,7 @@ export function normalizeOutlineBlocks(courseId, blocks) {
     courses: {},
     sections: {},
     sequences: {},
+    units: {}
   };
   Object.values(blocks).forEach(block => {
     switch (block.type) {
@@ -152,8 +153,23 @@ export function normalizeOutlineBlocks(courseId, blocks) {
           // link in the outline (even though we ignore the given url and use an internal <Link> to ourselves).
           showLink: !!block.lms_web_url,
           title: block.display_name,
+          unitIds: block.children || [],
         };
         break;
+        case 'vertical':
+          models.units[block.id] = {
+            complete: block.complete,
+            description: block.description,
+            due: block.due,
+            effortActivities: block.effort_activities,
+            effortTime: block.effort_time,
+            hasScheduledContent: block.has_scheduled_content,
+            icon: block.icon,
+            id: block.id,
+            showLink: !!block.lms_web_url,
+            title: block.display_name,
+          };
+          break;
 
       default:
         logInfo(`Unexpected course block type: ${block.type} with ID ${block.id}.  Expected block types are course, chapter, and sequential.`);

@@ -29,11 +29,17 @@ const SequenceLink = ({
     due,
     showLink,
     title,
+    unitIds
   } = sequence;
   const {
-    userTimezone,
+    userTimezone, courseBlocks
   } = useModel('outline', courseId);
-
+  const units = []
+  if (unitIds.length) {
+    unitIds.forEach(unitId => {
+      units.push(courseBlocks.units[unitId])
+    });
+  }
   const timezoneFormatArgs = userTimezone ? { timeZone: userTimezone } : {};
 
   const coursewareUrl = <Link to={`/course/${courseId}/${id}`}>{title}</Link>;
@@ -119,6 +125,15 @@ const SequenceLink = ({
             {due ? dueDateMessage : noDueDateMessage}
           </small>
         </div>
+        {
+          units.length > 0 ? <>
+            {
+              units.map(unit => <div className='row ml-3 pl-3 unit-link'>
+                <a className="pl-2">{unit.showLink ? <Link to={`/course/${courseId}/${unit.id}`}>{title}</Link> : unit.title}</a>
+              </div>)
+            }
+          </> : null
+        }
       </div>
     </li>
   );
