@@ -129,7 +129,7 @@ const SequenceLink = ({
           units.length > 0 ? <>
             {
               units.map(unit => <div className='row ml-3 pl-3 unit-link'>
-                <a className="pl-2">{unit.showLink ? <Link to={`/course/${courseId}/${unit.id}`}>{title}</Link> : unit.title}</a>
+                <a className="pl-2">{unit.showLink ? <Link to={`/course/${courseId}/${id}/${unit.id}`}>{unit.title}</Link> : unit.title}</a>
               </div>)
             }
           </> : null
